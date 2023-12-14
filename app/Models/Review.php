@@ -11,6 +11,6 @@ class Review extends Model
 
     public function book()
     {
-        $this->belongsTo("App\Models\Book");
+        return $this->belongsTo(Book::class);
     }
 }
