@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
+
+use function PHPUnit\Framework\returnValue;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +19,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     // return view('welcome');
+    return redirect()->route('books.index');
 });
 
 
 Route::resource('books', BookController::class);
+
+
+Route::get('clear-cache', function () {
+    Cache::flush();
+    dd("Cache Clear Successfully!!!");
+});
