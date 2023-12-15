@@ -24,7 +24,6 @@ class BookController extends Controller
             'popular_last_6months' => $books->popularLast6Months(),
             'highest_rated_last_month' => $books->highestRatedLastMonth(),
             'highest_rated_last_6months' => $books->highestRatedLast6Months(),
-            null => $books->latest(),
             default => $books->latest()
         };
         $books = $books->get();
@@ -52,9 +51,16 @@ class BookController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Book $book)
     {
-        //
+        return view(
+            'books.show',
+            [
+                'book' => $book->load([
+                    'reviews' => fn ($query) => $query->latest()
+                ])
+            ]
+        );
     }
 
     /**
