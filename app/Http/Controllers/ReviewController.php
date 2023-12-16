@@ -8,6 +8,14 @@ use Illuminate\Http\Request;
 class ReviewController extends Controller
 {
     /**
+     * The constructor function sets the middleware throttle for the 'store' method in the class.
+     */
+    public function __construct()
+    {
+        $this->middleware('throttle:reviews')->only(['store']);
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index()
