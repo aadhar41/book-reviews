@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\ReviewController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 
@@ -23,10 +25,15 @@ Route::get('/', function () {
 });
 
 
-Route::resource('books', BookController::class);
+Route::resource('books', BookController::class)->only(['index', 'show']);
 
+Route::resource('books.reviews', ReviewController::class)->scoped(['review' => 'book'])->only(['create', 'store']);
 
 Route::get('clear-cache', function () {
-    Cache::flush();
+    dd(Cache::get('book'));
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
+    Artisan::call('config:clear');
+    Artisan::call('view:clear');
     dd("Cache Clear Successfully!!!");
 });

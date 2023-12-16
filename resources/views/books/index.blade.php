@@ -59,4 +59,9 @@
             </li>
         @endforelse
     </ul>
+    @if ($books->count())
+        <nav class="mt-7">
+            {{ $books->links() }}
+        </nav>
+    @endif
 @endsection
